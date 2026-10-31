@@ -1,23 +1,40 @@
 # Validation record
 
-Validated on 28 October 2026 against https://www.saucedemo.com/.
+Validated against https://www.saucedemo.com/ on 31 October 2026.
+
+## GitHub Actions result
 
 | Check | Result |
 | --- | --- |
-| Dependency installation | Passed; exact dependency versions and npm lockfile included |
-| `npm run typecheck` | Passed |
-| `npx playwright test --list` | Seven Chromium tests discovered in three spec files |
-| Live end-to-end run | **7 passed in 51.3 seconds**, two workers, zero retries |
-| Public GitHub repository and hosted Actions run | Pending publication |
+| Dependency installation — `npm ci` | Passed |
+| TypeScript checking — `npm run typecheck` | Passed |
+| Chromium installation | Passed |
+| End-to-end tests — `npm test` | 7 passed in 3.6 seconds |
+| Workers | 2 |
+| Retries used | 0 |
 
-The live run used Playwright 1.56.1, Chromium Headless Shell 141.0.7390.37 and Node.js 24.22.1. CI is configured for Node 22; its result is not yet verified.
+[View the successful workflow run](https://github.com/priyankabhathija-bit/sauce-demo/actions/runs/41195460912)
 
-## Preparation environment
+The workflow used Node.js 22 and the committed Playwright configuration. No preparation-environment proxy or certificate exceptions were required.
 
-Initial browser downloads returned invalid archives; the pinned release's fallback download succeeded. An initial direct-network run failed at navigation with `ERR_EMPTY_RESPONSE`, before exercising the app. The preparation environment required its outbound proxy and interception certificate handling, configured through a separate temporary validation config. Those proxy and certificate exceptions are not in the delivered project. Normal local/CI execution uses the committed config and normal certificate verification.
+## Scope and limitations
 
-The site's third-party telemetry also triggered an automatic review block during preparation. The final suite uses an automatic request fixture that allows only the application origin and disables service workers, blocking third-party telemetry and fonts. The successful run used this final fixture and real, unmocked Sauce Demo application requests.
+The seven tests cover successful login, invalid-password rejection, cart updates, successful checkout and three required-field validation cases.
 
-## Before submission
+Only desktop Chromium was tested. Cross-browser, mobile and accessibility coverage are listed in the README's To Do section.
 
-Run `npm ci`, `npx playwright install chromium`, `npm run typecheck` and `npm test` on your machine, then inspect `npm run report`. Publish the project in a public GitHub repository, check the Actions result, and submit the repository URL. The passing preparation run does not guarantee future availability of the public demo or replace a hosted CI check.
+The suite blocks requests outside the application origin, including third-party telemetry and fonts. Sauce Demo application requests are not mocked.
+
+## Workflow maintenance
+
+The successful run displayed a Node.js runtime deprecation warning for GitHub Actions and an Ubuntu runner migration notice. Neither caused a failure. Updating action versions and reviewing the runner image are follow-up maintenance tasks.
+
+## Reproduce locally
+
+Run these commands from the project folder:
+
+    npm ci
+    npx playwright install chromium
+    npm run typecheck
+    npm test
+    npm run report
