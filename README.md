@@ -75,8 +75,11 @@ An HTML report is produced after every test run. Failed tests retain a trace and
 CI runs on Node 22 with two workers and one retry to help diagnose transient failures against a public site. Local runs have no retries. A retried pass should be investigated as a flaky result, not treated as evidence of stability. CI uploads reports and diagnostics for seven days, including on test failures.
 
 ## Validation status
+All seven tests passed in GitHub Actions on 31 October 2026 using Chromium and two workers. The test run completed in 3.6 seconds with no retries used. TypeScript checking also passed.
 
-See `VALIDATION.md` for the checks actually performed and any execution limitations. Do not treat test discovery or typechecking as an end-to-end pass. Before submitting, run this suite against the live site and inspect the HTML report and GitHub Actions result.
+[View the successful workflow run](https://github.com/priyankabhathija-bit/sauce-demo/actions/runs/41195460912)
+
+See [VALIDATION.md](VALIDATION.md) for validation details.
 
 ## To Do — if more time were available
 
@@ -92,17 +95,4 @@ In priority order:
 
 Sauce Demo includes intentionally problematic accounts. Keep any future tests for those accounts explicitly separated from the standard-user happy path, with known defects documented rather than hidden with retries.
 
-## Publish and submit
 
-Create an empty **public** repository named `sauce-demo-e2e` on GitHub. If uploading through the GitHub website, extract the supplied archive first and include `.github/workflows/playwright.yml` and `.gitignore`; do not upload the ZIP as the repository contents. Alternatively, from this project folder:
-
-```bash
-git init
-git add .
-git commit -m "Add focused Sauce Demo Playwright assessment suite"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/sauce-demo-e2e.git
-git push -u origin main
-```
-
-Replace `YOUR_USERNAME` with your GitHub username. These commands assume the new remote repository is empty. Confirm that the repository is publicly visible, inspect the Actions run, and submit its URL. Review and understand the fixture, page objects, assertions and trade-offs so that you can explain the implementation during the assessment discussion.
