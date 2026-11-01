@@ -7,6 +7,8 @@ A small Playwright + TypeScript suite for [Sauce Demo](https://www.saucedemo.com
 Requirements: Node.js 22 or later, npm, and access to Sauce Demo and the Playwright browser download service.
 
 ```bash
+git clone https://github.com/priyankabhathija-bit/sauce-demo.git
+cd sauce-demo
 npm ci
 npx playwright install chromium
 ```
