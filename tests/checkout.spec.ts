@@ -46,5 +46,9 @@ for (const scenario of requiredFields) {
     await expect(page).toHaveURL(/\/checkout-step-one\.html$/);
     await expect(checkout.continueButton).toBeVisible();
     await expect(shop.cartBadge).toHaveText('1');
+
+    await shop.openCart();
+    await expect(shop.cartItems).toHaveCount(1);
+    await expect(shop.item(products.backpack.name)).toBeVisible();
   });
 }
