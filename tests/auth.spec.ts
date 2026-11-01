@@ -18,6 +18,6 @@ test('invalid password is rejected without granting access', async ({ page, logi
   await expect(loginPage.error).toHaveText(
     'Epic sadface: Username and password do not match any user in this service',
   );
-  await expect(page).toHaveURL(/\/$/);
+  await expect(page).toHaveURL('/');
   await expect(loginPage.submit).toBeVisible();
 });
